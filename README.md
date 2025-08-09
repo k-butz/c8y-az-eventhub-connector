@@ -22,4 +22,4 @@ Following prerequisites apply for this Service:
 
 # Build and Deploy
 
-You can use the `justfile` in projects root directory to build the Service to a Docker image and upload to Cumulocity. The justfile is using the [Cumulocity CLI](https://goc8ycli.netlify.app/docs/introduction/) for deploying the Service to the platform. 
+You can use the `justfile` (see [just](https://github.com/casey/just)) in projects root directory to build the Service to a Docker image and upload to Cumulocity. The justfile is using the [Cumulocity CLI](https://goc8ycli.netlify.app/docs/introduction/) for deploying the Service to the platform. 
