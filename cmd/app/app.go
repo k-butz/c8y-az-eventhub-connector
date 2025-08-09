@@ -3,18 +3,14 @@ package app
 import (
 	"context"
 	"fmt"
-	"log"
 	"log/slog"
 	"net/http"
-	"os"
-	"os/signal"
 	"strings"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/messaging/azeventhubs"
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/labstack/echo/v4"
 	"github.com/reubenmiller/go-c8y/pkg/c8y"
-	"github.com/reubenmiller/go-c8y/pkg/c8y/notification2"
 	"github.com/reubenmiller/go-c8y/pkg/microservice"
 )
 
@@ -84,83 +80,44 @@ func (a *App) Run() {
 	application := a.c8ymicroservice
 	application.Scheduler.Start()
 
-	// Init C8Y
+	// Init C8Y client
 	slog.Info("Tenant Info", "tenant", application.Client.TenantName)
 	serviceUserCtx := application.WithServiceUser(application.Client.TenantName)
 	c8yClient := application.Client
-	// get api token from cumulocity
-	option, _, err := c8yClient.TenantOptions.GetOption(serviceUserCtx, "az-eventhub-connector", "c8y-token")
+	c8yToken, _, err := c8yClient.TenantOptions.GetOption(serviceUserCtx, "az-eventhub-connector", "credentials.c8y-token")
 	if err != nil {
 		slog.Error("Error while getting api token from platform", "error", err.Error())
 	}
-	c8yClient.SetToken(option.Value)
+	c8yClient.SetToken(c8yToken.Value)
 
 	// Init Event Hub
-	azProducerClient, err := azeventhubs.NewProducerClientFromConnectionString("NAMESPACE CONNECTION STRING", "EVENT HUB NAME", nil)
+	// get azure eventhub token and name from tenant options
+	azConnectionString, _, err := c8yClient.TenantOptions.GetOption(serviceUserCtx, "az-eventhub-connector", "credentials.az-connection-string")
+	if err != nil {
+		slog.Warn("Error while getting connection string for event hub", "error", err)
+	}
+	azEventHubName, _, err := c8yClient.TenantOptions.GetOption(serviceUserCtx, "az-eventhub-connector", "az-eventhub-name")
+	if err != nil {
+		slog.Warn("Error while getting eventhub name", "errror", err)
+	}
+	// generate client
+	azProducerClient, err := azeventhubs.NewProducerClientFromConnectionString(azConnectionString.Value, azEventHubName.Value, nil)
 	if err != nil {
 		slog.Error("Error while creating azure producer client", "error", err.Error())
 	}
 	defer azProducerClient.Close(context.TODO())
 
-	// subscribe to notification stream
-	notificationClient, err := c8yClient.Notification2.CreateClient(serviceUserCtx, c8y.Notification2ClientOptions{
-		Consumer: "eventHubConsumer",
-		Options: c8y.Notification2TokenOptions{
-			ExpiresInMinutes:  1440,
-			Subscriber:        "eventHubConsumer",
-			DefaultSubscriber: "eventHubConsumer",
-			Subscription:      "AzEventHubHandler",
-			Shared:            false,
-		},
-	})
-	if err != nil {
-		slog.Error("Error while creating notification subscription", "error", err.Error())
-	}
-
-	// connect and send all received messages to channel
-	err = notificationClient.Connect()
-	if err != nil {
-		slog.Error("Error while connecting to notification subscription", "error", err.Error())
-	}
-	ch := make(chan notification2.Message)
-	notificationClient.Register("*", ch)
-
-	// Enable ctrl-c stop signal
-	signalCh := make(chan os.Signal, 1)
-	signal.Notify(signalCh, os.Interrupt)
-
-	for {
-		select {
-		case msg := <-ch:
-			handleInboundMessage(msg, azProducerClient)
-			if err := notificationClient.SendMessageAck(msg.Identifier); err != nil {
-				slog.Warn("Failed to send message ack: %s", "error", err)
-			}
-		case <-signalCh:
-			// Enable ctrl-c to stop
-			log.Printf("Stopping client")
-			notificationClient.Close()
-			return
-		}
-	}
+	// start simulator client and subscribe to incoming data
+	startProducer(serviceUserCtx, c8yClient)
+	Subscribe(serviceUserCtx, c8yClient, azProducerClient, "AzEventHubHandler", "c1")
 }
 
-func handleInboundMessage(msg notification2.Message, azProducerClient *azeventhubs.ProducerClient) {
-	slog.Info("Received message", "msg", msg.Payload)
-
-	// now send to event hub
-	if azProducerClient == nil {
-		slog.Info("Message was not sent to Eventhub", "reason", "producer client is null")
+func startProducer(ctx context.Context, c8yClient *c8y.Client) {
+	// start simulator
+	c8yDeviceId, _, err := c8yClient.TenantOptions.GetOption(ctx, "az-eventhub-connector", "c8y-device-id")
+	if err != nil {
+		slog.Warn("Error while getting c8y device id (used for producing sample data). Won't produce data.", "error", err)
 		return
 	}
-	batch, err := azProducerClient.NewEventDataBatch(context.TODO(), &azeventhubs.EventDataBatchOptions{})
-	test := azeventhubs.EventData{Body: []byte(msg.Payload)}
-	batch.AddEventData(&test, nil)
-	if err != nil {
-		slog.Error("Error while adding data to eventhub message", "error", err.Error())
-	}
-	err = azProducerClient.SendEventDataBatch(context.TODO(), batch, nil)
-	if err != nil {
-		slog.Error("Error while sending batch to eventhub", "error", err.Error())
-	}
+	go produceSampleEventsEndless(ctx, c8yClient, c8yDeviceId.Value, "eventHubDemo", 5)
 }

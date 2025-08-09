@@ -1,0 +1,7 @@
+# A set of useful snippets for setting up the project
+
+c8y devices list --type tmp | c8y util repeat 10 | c8y events create --type eventHubDemo --text "Sample Event" -f
+
+c8y tenantoptions create --category az-eventhub-connector --key "c8y-device-id" --value "..." -f
+c8y tenantoptions create --category az-eventhub-connector --key "credentials.az-connection-string" --value "Endpoint=sb://..." -f | jq
+c8y tenantoptions create --category az-eventhub-connector --key "az-eventhub-name" --value "..." -f | jq
