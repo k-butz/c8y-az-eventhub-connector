@@ -1,0 +1,21 @@
+{
+    "apiVersion": "v2",
+    "name": "az-eventhub-connector",
+    "version": "0.0.1-SNAPSHOT",
+    "provider": {
+        "name": "Korbinian Butz",
+        "domain": "https://cumulocity.com",
+        "support": "korbinian.butz@cumulocity.com"
+    },
+    "isolation": "PER_TENANT",
+    "scale": "AUTO",
+    "replicas": 1,
+    "requiredRoles": [
+        "ROLE_NOTIFICATION_2_ADMIN"
+    ],
+    "roles": [],
+    "resources": {
+        "cpu": "0.5",
+        "memory": "256Mi"
+    }
+}
