@@ -8,6 +8,15 @@ import (
 	"github.com/reubenmiller/go-c8y/pkg/c8y"
 )
 
+func StartProducer(ctx context.Context, c8yClient *c8y.Client) {
+	c8yDeviceId, _, err := c8yClient.TenantOptions.GetOption(ctx, "az-eventhub-connector", "c8y-device-id")
+	if err != nil {
+		slog.Warn("Error while getting c8y device id (used for producing sample data). Won't produce data.", "error", err)
+		return
+	}
+	go produceSampleEventsEndless(ctx, c8yClient, c8yDeviceId.Value, "eventHubDemo", 5)
+}
+
 func produceSampleEventsEndless(ctx context.Context, c8yClient *c8y.Client, moId string, eventType string, sleepTimeSecs int) {
 	for {
 		_, _, err := c8yClient.Event.Create(ctx, c8y.Event{

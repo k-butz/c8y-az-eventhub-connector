@@ -1,6 +1,6 @@
 # About
 
-This project is a Cumulocity Microservice that listens to all Events created in a Cumulocity Tenant. On arrival, these Events are sent to an Azure Event Hub data stream. 
+This project is a Cumulocity Microservice that listens to all Events created in a Cumulocity Tenant via the `Notification 2.0` Apis. On arrival, these Events are sent to an Azure Event Hub data stream. 
 
 <img src="docs/imgs/readme-about.png" width="700">
 
@@ -12,7 +12,7 @@ Following prerequisites apply for this Service:
 
 * Have at least one Azure Event Hub (you will need the name and SAS Token)
 
-* Have the following tenant credentials set:
+* Have the following tenant options set:
 
 |Category|Key|Value|Optional/Mandatory|
 |--|--|--|--|

@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/messaging/azeventhubs"
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/labstack/echo/v4"
-	"github.com/reubenmiller/go-c8y/pkg/c8y"
 	"github.com/reubenmiller/go-c8y/pkg/microservice"
 )
 
@@ -107,17 +106,7 @@ func (a *App) Run() {
 	}
 	defer azProducerClient.Close(context.TODO())
 
-	// start simulator client and subscribe to incoming data
-	startProducer(serviceUserCtx, c8yClient)
-	Subscribe(serviceUserCtx, c8yClient, azProducerClient, "AzEventHubHandler", "c1")
-}
+	StartProducer(serviceUserCtx, c8yClient)
 
-func startProducer(ctx context.Context, c8yClient *c8y.Client) {
-	// start simulator
-	c8yDeviceId, _, err := c8yClient.TenantOptions.GetOption(ctx, "az-eventhub-connector", "c8y-device-id")
-	if err != nil {
-		slog.Warn("Error while getting c8y device id (used for producing sample data). Won't produce data.", "error", err)
-		return
-	}
-	go produceSampleEventsEndless(ctx, c8yClient, c8yDeviceId.Value, "eventHubDemo", 5)
+	Subscribe(serviceUserCtx, c8yClient, azProducerClient, "AzEventHubHandler", "c1")
 }
