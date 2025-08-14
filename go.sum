@@ -81,6 +81,10 @@ github.com/prometheus/procfs v0.15.1 h1:YagwOFzUgYfKKHX6Dr+sHT7km/hxC76UB0leargg
 github.com/prometheus/procfs v0.15.1/go.mod h1:fB45yRUv8NstnjriLhBQLuOUt+WW4BsoGhij/e3PBqk=
 github.com/reubenmiller/go-c8y v0.37.4 h1:JRi/PUl5tHn1tFhWbKAApGYE2k83VLmRTSbJbbT1Azs=
 github.com/reubenmiller/go-c8y v0.37.4/go.mod h1:63lPvPX6B8xf5GT9PvRrXgM0u5uU5tgZiQRAIfYQDQY=
+github.com/reubenmiller/go-c8y v0.37.5 h1:BetRNK3WTt6QhIm7M6ZlKqlWtjslHWMA3viBPW2O0Jk=
+github.com/reubenmiller/go-c8y v0.37.5/go.mod h1:63lPvPX6B8xf5GT9PvRrXgM0u5uU5tgZiQRAIfYQDQY=
+github.com/reubenmiller/go-c8y v0.37.6-0.20250814085701-bdb5db11ae08 h1:+1Gou3KkH0m922P633KBGRNCzqBT46vg721wo/KP298=
+github.com/reubenmiller/go-c8y v0.37.6-0.20250814085701-bdb5db11ae08/go.mod h1:63lPvPX6B8xf5GT9PvRrXgM0u5uU5tgZiQRAIfYQDQY=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rogpeppe/go-internal v1.10.0 h1:TMyTOH3F/DB16zRVcYyreMH6GnZZrwQVAoYjRBZyWFQ=
 github.com/rogpeppe/go-internal v1.10.0/go.mod h1:UQnix2H7Ngw/k4C5ijL5+65zddjncjaFoBhdsK/akog=

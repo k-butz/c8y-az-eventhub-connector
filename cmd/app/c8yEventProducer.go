@@ -14,7 +14,7 @@ func StartProducer(ctx context.Context, c8yClient *c8y.Client) {
 		slog.Warn("Error while getting c8y device id (used for producing sample data). Won't produce data.", "error", err)
 		return
 	}
-	go produceSampleEventsEndless(ctx, c8yClient, c8yDeviceId.Value, "eventHubDemo", 10)
+	go produceSampleEventsEndless(ctx, c8yClient, c8yDeviceId.Value, "eventHubDemo", 2)
 }
 
 func produceSampleEventsEndless(ctx context.Context, c8yClient *c8y.Client, moId string, eventType string, sleepTimeSecs int) {

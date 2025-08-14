@@ -5,7 +5,7 @@ go 1.24.5
 require (
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/labstack/echo/v4 v4.13.4
-	github.com/reubenmiller/go-c8y v0.37.4
+	github.com/reubenmiller/go-c8y v0.37.6-0.20250814085701-bdb5db11ae08
 )
 
 require (

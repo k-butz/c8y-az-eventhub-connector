@@ -11,7 +11,11 @@
     "scale": "AUTO",
     "replicas": 1,
     "requiredRoles": [
-        "ROLE_NOTIFICATION_2_ADMIN"
+        "ROLE_NOTIFICATION_2_ADMIN", 
+        "ROLE_EVENT_ADMIN", 
+        "ROLE_INVENTORY_READ", 
+        "ROLE_OPTION_MANAGEMENT_ADMIN",
+        "ROLE_OPTION_MANAGEMENT_READ"
     ],
     "roles": [],
     "resources": {
