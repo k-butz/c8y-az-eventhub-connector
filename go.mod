@@ -1,17 +1,17 @@
 module github.com/k-butz/c8y-az-eventhub-connector
 
-go 1.24.5
+go 1.24.6
 
 require (
+	github.com/Azure/azure-sdk-for-go/sdk/messaging/azeventhubs v1.4.0
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/labstack/echo/v4 v4.13.4
-	github.com/reubenmiller/go-c8y v0.37.6-0.20250814085701-bdb5db11ae08
+	github.com/reubenmiller/go-c8y v0.37.7-0.20250817101212-45f32f2b0ff7
 )
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.18.0 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.1 // indirect
-	github.com/Azure/azure-sdk-for-go/sdk/messaging/azeventhubs v1.4.0 // indirect
 	github.com/Azure/go-amqp v1.4.0 // indirect
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
