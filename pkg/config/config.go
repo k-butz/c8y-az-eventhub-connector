@@ -20,7 +20,7 @@ func ValidateConfig() error {
 	for _, v := range []string{
 		"logs.level",
 		"subscription.name",
-		"subscription.subscriberName",
+		"subscription.subscriber_name",
 		"subscription.inventory_query",
 		"subscription.sync_cron",
 		"workers.count_inbound_workers",
@@ -53,7 +53,7 @@ func setDefaultConfigs() {
 	viper.SetDefault("logs.level", "INFO")
 
 	viper.SetDefault("subscription.name", "AzEventHubIntegration")
-	viper.SetDefault("subscription.subscriberName", "ehSubscriber")
+	viper.SetDefault("subscription.subscriber_name", "ehSubscriber")
 	viper.SetDefault("subscription.inventory_query", "has(fwdToAzureEventHub) and not has(azureNotificationSubscription)")
 	viper.SetDefault("subscription.sync_cron", "*/10 * * * *")
 
