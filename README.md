@@ -12,7 +12,7 @@ Following prerequisites apply for this Service:
 
 * Have at least one Azure Event Hub (you will need the name and SAS Token)
 
-* Have Managed Objects in your tenant that match the query stated in `subscription.inventoryQuery` within `config.toml` file (default configuration is to forward data from all Managed Objects with `fwdToAzureEventHub` fragment). See Q&A section for more info.
+* Have Managed Objects in your tenant that match the query stated in `subscription.inventoryQuery` within `config.toml` file. Default configuration is to forward data from all Managed Objects with `fwdToAzureEventHub` fragment. See Q&A section for more info.
 
 * Have the following tenant options set:
 
