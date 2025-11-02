@@ -12,7 +12,7 @@ Following prerequisites apply for this Service:
 
 * Have at least one Azure Event Hub (you will need the name and SAS Token)
 
-* Have Managed Objects in your tenant that match the query stated in `subscription.inventoryQuery` within `config.toml` file (see also Q&A section)
+* Have Managed Objects in your tenant that match the query stated in `subscription.inventoryQuery` within `config.toml` file (default configuration is to forward data from all Managed Objects with `fwdToAzureEventHub` fragment). See Q&A section for more info.
 
 * Have the following tenant options set:
 
@@ -63,7 +63,7 @@ The config file is optional, if none is provided, sensible defaults will be appl
 How can I define for which Managed Objects (Devices) data is forwarded?
 ```
 
-The service queries periodically for all Objects that should be part of the live-data subscription, but isn't yet. Every object hitting this query will be added to the live-subscription automatically.
+The service queries periodically for all Objects that should be part of the live-data subscription, but isn't yet. Every object matching this query will be added to the live-subscription automatically.
 
 The query that is used to find these "should have subscription but have not yet" objects is configurable via the `subscription.inventory_query` setting in `config.toml`. By default the service adds all Managed Objects with the fragment `fwdToAzureEventHub` to the Subscription. 
 
