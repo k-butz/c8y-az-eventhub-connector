@@ -24,7 +24,6 @@ Following prerequisites apply for this Service:
 A convenient way to manage these tenant options is via [CLI](https://goc8ycli.netlify.app/docs/introduction/):
 
 ```sh
-# make sure category and key names mach
 $ c8y tenantoptions create --category azEventHubConnector --key "eventHubName" --value "your-event-hub-name" -f
 $ c8y tenantoptions create --category azEventHubConnector --key "credentials.connectionString" --value "Endpoint=sb://..." -f
 ```

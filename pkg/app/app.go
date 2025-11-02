@@ -34,7 +34,7 @@ func Run() {
 	slog.Info("User details", "userId", userId, "roles", userRoles)
 
 	// read and validate tenant options (app will shutdown if not present)
-	category := viper.GetString("c8y.tenant_options.category")
+	category := "azEventHubConnector"
 	slog.Info("Requesting tenant options", "category", category)
 	opts, err := readTenantOptions(c8yClient, category)
 	if err != nil {
@@ -45,7 +45,7 @@ func Run() {
 	slog.Info("Validating tenant options ...")
 
 	// eventhub name
-	ehNameKey := viper.GetString("c8y.tenant_options.key_eventhub_name")
+	ehNameKey := "eventHubName"
 	ehNameValue, ok := opts[ehNameKey]
 	if !ok || len(ehNameValue) == 0 {
 		slog.Error("Eventhub name was not found in tenant options. This is a fatal error, exiting now",
@@ -55,7 +55,7 @@ func Run() {
 	slog.Info("Found required tenant option for event hub name", "category", category, "key", ehNameKey, "value", ehNameValue)
 
 	// eventhub connection string
-	ehConnStrKey := viper.GetString("c8y.tenant_options.key_eventhub_connstr")
+	ehConnStrKey := "connectionString"
 	ehConnStrValue, ok := opts[ehConnStrKey]
 	if !ok || len(ehConnStrValue) == 0 {
 		slog.Error("Eventhub connection string was not found in tenant options. This is a fatal error, exiting now",

@@ -18,9 +18,6 @@ func ValidateConfig() error {
 	keys := viper.GetViper().AllKeys()
 	missingKeys := []string{}
 	for _, v := range []string{
-		"c8y.tenant_options.category",
-		"c8y.tenant_options.key_eventhub_name",
-		"c8y.tenant_options.key_eventhub_connstr",
 		"logs.level",
 		"subscription.name",
 		"subscription.subscriber",
@@ -59,10 +56,6 @@ func setDefaultConfigs() {
 	viper.SetDefault("subscription.subscriber", "ehSubscriber")
 	viper.SetDefault("subscription.inventory_query", "has(fwdToAzureEventHub) and not has(azureNotificationSubscription)")
 	viper.SetDefault("subscription.sync_cron", "*/10 * * * *")
-
-	viper.SetDefault("c8y.tenant_options.category", "azEventHubConnector")
-	viper.SetDefault("c8y.tenant_options.key_eventhub_name", "eventHubName")
-	viper.SetDefault("c8y.tenant_options.key_eventhub_connstr", "connectionString")
 
 	viper.SetDefault("workers.count_inbound_workers", 3)
 	viper.SetDefault("workers.count_outbound_workers", 3)

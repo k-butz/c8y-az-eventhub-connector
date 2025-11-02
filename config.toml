@@ -27,11 +27,3 @@ port = 80
 
 [monitoring]
 console_cron = "@every 30s"
-
-# Event Hub name and connection string are supposed to be configured as tenant tenant_options
-# Below allows configuring category and keys (not the values!) of your tenant option
-[c8y.tenant_options]
-# when changed, make sure it matches with "settingsCategory" in cumulocity.json manifest
-category = "azEventHubConnector"
-key_eventhub_name = "eventHubName"
-key_eventhub_connstr = "connectionString"
