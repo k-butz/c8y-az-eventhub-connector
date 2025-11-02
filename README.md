@@ -12,6 +12,8 @@ Following prerequisites apply for this Service:
 
 * Have at least one Azure Event Hub (you will need the name and SAS Token)
 
+* Have Managed Objects in your tenant that match the query stated in `subscription.inventoryQuery` within `config.toml` file (see also Q&A section)
+
 * Have the following tenant options set:
 
 |Category|Key|Value|Optional/Mandatory|
