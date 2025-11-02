@@ -18,7 +18,7 @@ Following prerequisites apply for this Service:
 
 |Category|Key|Value|Optional/Mandatory|
 |--|--|--|--|
-|azEventHubConnector|credentials.connectionStringg|The [connection string]((https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string)) for your Event Hub (this value will be encrypted by Cumulocity)<br><br>Note: Connection String looks like `Endpoint=sb://your-eventhub-namespace.servicebus.windows.net/;SharedAccessKeyName=<your-sas-policy>;SharedAccessKey=<your-access-key>`, remove the `;EntityPath=xxx` suffix if existing|mandatory|
+|azEventHubConnector|credentials.connectionString|The [connection string]((https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string)) for your Event Hub (this value will be encrypted by Cumulocity)<br><br>Note: Connection String looks like `Endpoint=sb://your-eventhub-namespace.servicebus.windows.net/;SharedAccessKeyName=<your-sas-policy>;SharedAccessKey=<your-access-key>`, remove the `;EntityPath=xxx` suffix if existing|mandatory|
 |azEventHubConnector|eventHubName|Name of your Azure Event Hub (w/o namespace prefix)|mandatory|
 
 A convenient way to manage these tenant options is via [CLI](https://goc8ycli.netlify.app/docs/introduction/):
