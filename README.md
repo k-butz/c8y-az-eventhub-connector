@@ -60,14 +60,7 @@ The config file is optional, if none is provided, sensible defaults will be appl
 # Q & A
 
 ```
-How long does it take from data-receival in Cumulocity until it is forwarded to my Event Hub?
-```
-TLDR: this is configurable, by default you can expect < 3 seconds.
-
-The Service receives a notification about newly received measurements immediately. Once received, the Service implements real-time batching with fixed time windows. This means it bundles all measurements until either a fixed batch size or a fixed time window is reached. Both (max. batch size and max. time window) is configurable in the `config.toml` file. By default, max. time-window is configured to be 1 second.
-
-```
-How can I filter for which Managed Objects (Devices) data is forwarded?
+How can I define for which Managed Objects (Devices) data is forwarded?
 ```
 
 The service queries periodically for all Objects that should be part of the live-data subscription, but isn't yet. Every object hitting this query will be added to the live-subscription automatically.
@@ -75,6 +68,14 @@ The service queries periodically for all Objects that should be part of the live
 The query that is used to find these "should have subscription but have not yet" objects is configurable via the `subscription.inventory_query` setting in `config.toml`. By default the service adds all Managed Objects with the fragment `fwdToAzureEventHub` to the Subscription. 
 
 > To have Measurements for all Devices forwarded the query should be `has(c8y_IsDevice) and not has(azureNotificationSubscription)`. 
+
+```
+How long does it take from data-receival in Cumulocity until it is forwarded to my Event Hub?
+```
+TLDR: this is configurable, by default you can expect < 3 seconds.
+
+The Service receives a notification about newly received measurements immediately. Once received, the Service implements real-time batching with fixed time windows. This means it bundles all measurements until either a fixed batch size or a fixed time window is reached. Both (max. batch size and max. time window) is configurable in the `config.toml` file. By default, max. time-window is configured to be 1 second.
+
 
 ```
 When adding a new Device, how long will it take until it is registered to the live-subscription
