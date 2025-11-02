@@ -1,25 +1,36 @@
 {
     "apiVersion": "v2",
     "name": "az-eventhub-connector",
-    "version": "0.0.1-SNAPSHOT",
+    "settingsCategory": "azEventHubConnector",
+    "version": "0.0.7-SNAPSHOT",
     "provider": {
         "name": "Korbinian Butz",
         "domain": "https://cumulocity.com",
         "support": "korbinian.butz@cumulocity.com"
     },
     "isolation": "PER_TENANT",
-    "scale": "AUTO",
     "replicas": 1,
     "requiredRoles": [
         "ROLE_NOTIFICATION_2_ADMIN", 
-        "ROLE_EVENT_ADMIN", 
-        "ROLE_INVENTORY_READ", 
-        "ROLE_OPTION_MANAGEMENT_ADMIN",
-        "ROLE_OPTION_MANAGEMENT_READ"
+        "ROLE_MANAGED_OBJECT_READ",
+        "ROLE_MANAGED_OBJECT_ADMIN",
+        "ROLE_OPTION_MANAGEMENT_READ",
+        "ROLE_USER_MANAGEMENT_OWN_READ"
     ],
+    "livenessProbe": {
+        "httpGet": {
+            "path": "/health"
+        },
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30
+    },
     "roles": [],
+    "requestedResources": {
+        "cpu": "0.5",
+        "memory": "128Mi"
+    },
     "resources": {
         "cpu": "0.5",
-        "memory": "256Mi"
+        "memory": "128Mi"
     }
 }

@@ -9,6 +9,7 @@
             "envFile": "${workspaceFolder}/.env",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/main.go"
+            // "dlvFlags": ["--check-go-version=false"] 
         }
     ]
 }

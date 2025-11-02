@@ -1,0 +1,37 @@
+[logs]
+# supported levels = DEBUG, INFO, WARN, ERROR
+level = "INFO"
+
+[subscription]
+name = "AzEventHubHandler"
+ehSubscriber = "ehSubscriber"
+# all managed objects returned by this query will be added to the live-subscription
+inventory_query = "has(fwdToAzureEventHub) and not has(azureNotificationSubscription)"
+# query is checked every 10 mins
+sync_cron = "*/10 * * * *"
+
+[workers]
+# Poolsize Goroutines (virtual threads) used for inbound data processing (message receival and filtering)
+count_inbound_workers = 5
+# Poolsize Goroutines for sending data towards Azure Event Hub
+count_outbound_workers = 5
+
+# batches are emitted either when they're full or after a specified timeout, whichever comes first
+[batching]
+time_window_ms = 1000
+max_count_elements = 25
+
+[api]
+# needs to be configured with 80 when running Cumulocity
+port = 80
+
+[monitoring]
+console_cron = "@every 30s"
+
+# Event Hub name and connection string are supposed to be configured as tenant tenant_options
+# Below allows configuring category and keys (not the values!) of your tenant option
+[c8y.tenant_options]
+# when changed, make sure it matches with "settingsCategory" in cumulocity.json manifest
+category = "azEventHubConnector"
+key_eventhub_name = "eventHubName"
+key_eventhub_connstr = "connectionString"
