@@ -4,7 +4,7 @@ level = "INFO"
 
 [subscription]
 name = "AzEventHubHandler"
-ehSubscriber = "ehSubscriber"
+subscriberName = "ehSubscriber"
 # all managed objects returned by this query will be added to the live-subscription
 inventory_query = "has(fwdToAzureEventHub) and not has(azureNotificationSubscription)"
 # query is checked every 10 mins

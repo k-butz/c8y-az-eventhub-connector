@@ -94,7 +94,7 @@ func Run() {
 
 func startPipeline(c8yClient *c8y.Client, azureClient *azeventhubs.ProducerClient) {
 	measurementSubscriptionName := viper.GetString("subscription.name")
-	subscriberName := viper.GetString("subscription.subscriber")
+	subscriberName := viper.GetString("subscription.subscriberName")
 	p := Pipeline{
 		Id:          generateBase64ShortID(),
 		C8YClient:   c8yClient,
