@@ -102,8 +102,6 @@ No. The service is using persisted Notification2 subscriptions. This ensures all
 
 * Move the service from `PER_TENANT` to `MULTI_TENANT` scope. This will allow the service to run once and serve multiple tenants in parallel. 
 
-* Currently the configuration file is copied into the docker image while building. In future, the configuration file will be externalized (likely via tenant options) so that re-configuration does not need a new docker image.
-
 * Setup of Github-/Release workflow so that the built artifacts can be downloaded directly from the Github project
 
 * Usage of (shared consumers)[https://cumulocity.com/api/core/#section/Overview/Shared-consumer-tokens]. This will not only allow to scale up/down workers for the live-data pipeline but also to have multiple, parallel live-data pipelines (potentially interesting for use cases with very high throughput requirements)
