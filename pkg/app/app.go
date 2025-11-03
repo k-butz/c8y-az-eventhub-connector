@@ -55,19 +55,24 @@ func Run() {
 	slog.Info("Found required tenant option for event hub name", "category", category, "key", ehNameKey, "value", ehNameValue)
 
 	// eventhub connection string
-	ehConnStrKey := "connectionString"
-	ehConnStrValue, ok := opts[ehConnStrKey]
-	if !ok || len(ehConnStrValue) == 0 {
-		slog.Error("Eventhub connection string was not found in tenant options. This is a fatal error, exiting now",
-			"tip", fmt.Sprintf("Make sure to have configured a tenant option with category '%s' and key '%s'", category, ehConnStrKey))
-		util.Shutdown(60, 1)
-	}
-	slog.Info("Found required tenant option for event hub name", "category", category, "key", ehConnStrKey, "value", "redacted")
-	requiredPrefix := "Endpoint=sb://"
-	if !strings.HasPrefix(ehConnStrValue, requiredPrefix) {
-		slog.Error(fmt.Sprintf("Eventhub connection string has been found but does not start with required prefix '%s'. This is a fatal error, exiting now", requiredPrefix),
-			"tip", fmt.Sprintf("Make sure your connection string starts with '%s'", requiredPrefix))
-		util.Shutdown(60, 1)
+	ehConnStrValue := ""
+	if len(os.Getenv("EVENTHUB_CONN_STR")) > 0 {
+		ehConnStrValue = os.Getenv("EVENTHUB_CONN_STR")
+	} else {
+		ehConnStrKey := "connectionString"
+		ehConnStrValue, ok = opts[ehConnStrKey]
+		if !ok || len(ehConnStrValue) == 0 {
+			slog.Error("Eventhub connection string was not found in tenant options. This is a fatal error, exiting now",
+				"tip", fmt.Sprintf("Make sure to have configured a tenant option with category '%s' and key '%s'", category, ehConnStrKey))
+			util.Shutdown(60, 1)
+		}
+		slog.Info("Found required tenant option for event hub name", "category", category, "key", ehConnStrKey, "value", "redacted")
+		requiredPrefix := "Endpoint=sb://"
+		if !strings.HasPrefix(ehConnStrValue, requiredPrefix) {
+			slog.Error(fmt.Sprintf("Eventhub connection string has been found but does not start with required prefix '%s'. This is a fatal error, exiting now", requiredPrefix),
+				"tip", fmt.Sprintf("Make sure your connection string starts with '%s'", requiredPrefix))
+			util.Shutdown(60, 1)
+		}
 	}
 	slog.Info("Found all required tenant options", "category", category)
 

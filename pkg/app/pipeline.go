@@ -153,9 +153,10 @@ func outboundProcessing(p *Pipeline) {
 		currentBatch := azBatch
 		for _, c8yElement := range c8yBatch {
 			messageId := c8yElement.Get("id").String()
+			c8yElementJson := c8yElement.String()
 			azElement := azeventhubs.EventData{
 				// required
-				Body: []byte(c8yElement.Str),
+				Body: []byte(c8yElementJson),
 				// optional
 				Properties:  map[string]any{"origin": "cumulocity"},
 				ContentType: &contentType,
