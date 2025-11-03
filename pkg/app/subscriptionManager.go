@@ -21,7 +21,7 @@ func startSubscriptionManager(client *c8y.Client) {
 	fn := func() {
 		// first query all Objects for configured query
 		mos, err := cy.QueryManagedObjects(client, cy.NewInventoryQueryOptions(
-			cy.WithQuery(query),
+			cy.WithQuery(query+" and not has(azureNotificationSubscription)"),
 			cy.WithKeyExtractorFn(func(item gjson.Result) string {
 				return item.Get("id").String()
 			}),

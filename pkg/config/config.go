@@ -54,7 +54,7 @@ func setDefaultConfigs() {
 
 	viper.SetDefault("subscription.name", "AzEventHubIntegration")
 	viper.SetDefault("subscription.subscriber_name", "ehSubscriber")
-	viper.SetDefault("subscription.inventory_query", "has(fwdToAzureEventHub) and not has(azureNotificationSubscription)")
+	viper.SetDefault("subscription.inventory_query", "has(fwdToAzureEventHub)")
 	viper.SetDefault("subscription.sync_cron", "*/10 * * * *")
 
 	viper.SetDefault("workers.count_inbound_workers", 3)

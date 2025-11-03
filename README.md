@@ -63,11 +63,11 @@ The config file is optional, if none is provided, sensible defaults will be appl
 How can I define for which Managed Objects (Devices) data is forwarded?
 ```
 
-The service queries periodically for all Objects that should be part of the live-data subscription, but isn't yet. Every object matching this query will be added to the live-subscription automatically.
+The service queries periodically for all Objects that should be part of the live-data subscription. Every object matching this query will be added to the live-subscription automatically.
 
-The query that is used to find these "should have subscription but have not yet" objects is configurable via the `subscription.inventory_query` setting in `config.toml`. By default the service adds all Managed Objects with the fragment `fwdToAzureEventHub` to the Subscription. 
+The query that is used to find these "should have subscription but have not yet" objects is configurable via the `subscription.inventory_query` setting in `config.toml`. The default-query is `has(fwdToAzureEventHub)` - so the service listens to all Managed Objects with the fragment `fwdToAzureEventHub` to the Subscription. 
 
-> To have Measurements for all Devices forwarded the query should be `has(c8y_IsDevice) and not has(azureNotificationSubscription)`. 
+> To have Measurements for all Devices forwarded the query should be `has(c8y_IsDevice)`. 
 
 ```
 How long does it take from data-receival in Cumulocity until it is forwarded to my Event Hub?
